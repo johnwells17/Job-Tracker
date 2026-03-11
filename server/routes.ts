@@ -44,6 +44,19 @@ export async function registerRoutes(
       }
       updates.salary = body.salary;
     }
+    if (body.contactName !== undefined) updates.contactName = body.contactName;
+    if (body.contactLinkedin !== undefined) {
+      if (body.contactLinkedin && !/^https?:\/\/(www\.)?linkedin\.com\//.test(body.contactLinkedin)) {
+        return res.status(400).json({ message: "Must be a valid LinkedIn URL (e.g. https://linkedin.com/in/name)" });
+      }
+      updates.contactLinkedin = body.contactLinkedin;
+    }
+    if (body.contactEmail !== undefined) {
+      if (body.contactEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.contactEmail)) {
+        return res.status(400).json({ message: "Must be a valid email address" });
+      }
+      updates.contactEmail = body.contactEmail;
+    }
     if (body.notes !== undefined) updates.notes = body.notes;
 
     if (body.status !== undefined) {

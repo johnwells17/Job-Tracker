@@ -39,6 +39,20 @@ export function validateProspect(data: Record<string, unknown>): { valid: boolea
     }
   }
 
+  if (data.contactLinkedin !== undefined && data.contactLinkedin !== null && data.contactLinkedin !== "") {
+    const url = String(data.contactLinkedin);
+    if (!/^https?:\/\/(www\.)?linkedin\.com\//.test(url)) {
+      errors.push("Must be a valid LinkedIn URL (e.g. https://linkedin.com/in/name)");
+    }
+  }
+
+  if (data.contactEmail !== undefined && data.contactEmail !== null && data.contactEmail !== "") {
+    const email = String(data.contactEmail);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errors.push("Must be a valid email address");
+    }
+  }
+
   if (data.salary !== undefined && data.salary !== null && data.salary !== "") {
     const salaryStr = String(data.salary);
     if (!/^\$?\d{1,3}(,\d{3})*(\.\d{1,2})?$/.test(salaryStr)) {

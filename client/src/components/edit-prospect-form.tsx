@@ -40,6 +40,9 @@ export function EditProspectForm({ prospect, onSuccess }: EditProspectFormProps)
       roleTitle: prospect.roleTitle,
       jobUrl: prospect.jobUrl ?? "",
       salary: prospect.salary ?? "",
+      contactName: prospect.contactName ?? "",
+      contactLinkedin: prospect.contactLinkedin ?? "",
+      contactEmail: prospect.contactEmail ?? "",
       status: prospect.status as InsertProspect["status"],
       interestLevel: prospect.interestLevel as InsertProspect["interestLevel"],
       notes: prospect.notes ?? "",
@@ -128,6 +131,64 @@ export function EditProspectForm({ prospect, onSuccess }: EditProspectFormProps)
             </FormItem>
           )}
         />
+
+        <div className="space-y-3 rounded-md border border-border/50 p-3">
+          <p className="text-xs font-medium text-muted-foreground">Point of Contact (optional)</p>
+          <FormField
+            control={form.control}
+            name="contactName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="e.g. Jane Smith"
+                    {...field}
+                    value={field.value ?? ""}
+                    data-testid="input-edit-contact-name"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="contactLinkedin"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>LinkedIn URL</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="https://linkedin.com/in/janesmith"
+                    {...field}
+                    value={field.value ?? ""}
+                    data-testid="input-edit-contact-linkedin"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="contactEmail"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="jane@company.com"
+                    {...field}
+                    value={field.value ?? ""}
+                    data-testid="input-edit-contact-email"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <div className="grid grid-cols-2 gap-4">
           <FormField
