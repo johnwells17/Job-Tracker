@@ -19,6 +19,7 @@ export const prospects = pgTable("prospects", {
   companyName: text("company_name").notNull(),
   roleTitle: text("role_title").notNull(),
   jobUrl: text("job_url"),
+  salary: text("salary"),
   status: text("status").notNull().default("Bookmarked"),
   interestLevel: text("interest_level").notNull().default("Medium"),
   notes: text("notes"),
@@ -34,6 +35,13 @@ export const insertProspectSchema = createInsertSchema(prospects).omit({
   status: z.enum(STATUSES).default("Bookmarked"),
   interestLevel: z.enum(INTEREST_LEVELS).default("Medium"),
   jobUrl: z.string().optional().nullable(),
+  salary: z.string()
+    .optional()
+    .nullable()
+    .refine(
+      (val) => !val || /^\$?\d{1,3}(,\d{3})*(\.\d{1,2})?$/.test(val),
+      { message: "Salary must be a valid dollar amount (e.g. $85,000)" }
+    ),
   notes: z.string().optional().nullable(),
 });
 
