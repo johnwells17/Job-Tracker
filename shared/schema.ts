@@ -20,6 +20,9 @@ export const prospects = pgTable("prospects", {
   roleTitle: text("role_title").notNull(),
   jobUrl: text("job_url"),
   salary: text("salary"),
+  contactName: text("contact_name"),
+  contactLinkedin: text("contact_linkedin"),
+  contactEmail: text("contact_email"),
   status: text("status").notNull().default("Bookmarked"),
   interestLevel: text("interest_level").notNull().default("Medium"),
   notes: text("notes"),
@@ -41,6 +44,21 @@ export const insertProspectSchema = createInsertSchema(prospects).omit({
     .refine(
       (val) => !val || /^\$?\d{1,3}(,\d{3})*(\.\d{1,2})?$/.test(val),
       { message: "Salary must be a valid dollar amount (e.g. $85,000)" }
+    ),
+  contactName: z.string().optional().nullable(),
+  contactLinkedin: z.string()
+    .optional()
+    .nullable()
+    .refine(
+      (val) => !val || /^https?:\/\/(www\.)?linkedin\.com\//.test(val),
+      { message: "Must be a valid LinkedIn URL (e.g. https://linkedin.com/in/name)" }
+    ),
+  contactEmail: z.string()
+    .optional()
+    .nullable()
+    .refine(
+      (val) => !val || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val),
+      { message: "Must be a valid email address" }
     ),
   notes: z.string().optional().nullable(),
 });
